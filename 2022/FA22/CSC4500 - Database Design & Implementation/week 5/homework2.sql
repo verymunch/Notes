@@ -65,3 +65,35 @@ SELECT se.studentName AS "Name", "Student" AS TYPE
   UNION
     SELECT f.fname, "Faculty"
     FROM faculty f;
+
+-- Query 4: Show all courses that have no students enrolled.
+
+-- Query 5: Show the course id for all courses that have only one student enrolled. 
+SELECT se.courseID
+  FROM StudentEnroll se
+  GROUP BY se.courseID
+  HAVING COUNT(*) = 1;
+-- or without using StudentEnroll view
+SELECT e.cid
+  FROM enroll e
+  GROUP BY e.cid
+  HAVING COUNT(*) = 1; 
+
+-- Query 6: Show the faculty id and faculty name for all faculty that have taught all computer science majors.
+
+-- Query 7: Show the student id, student name, course id and grade for any student that has earned a D or F.
+SELECT se.sid, se.sname, se.cid, se.grade
+  FROM StudentEnroll se
+  WHERE se.grade = "D" OR se.grade = "F";
+
+-- Query 8: Show the faculty member's id and name for the faculty teaching the most courses.
+SELECT c.fid, f.fname
+  FROM course c JOIN faculty f ON c.fid = f.fid
+  GROUP by c.fid
+  HAVING COUNT(*) >=
+  (SELECT max(num)
+    FROM (SELECT COUNT(*) AS num
+      FROM course c
+      GROUP BY c.fid));
+
+-- Query 9: 
