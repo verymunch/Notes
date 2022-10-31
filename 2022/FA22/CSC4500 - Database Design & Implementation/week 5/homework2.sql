@@ -96,4 +96,8 @@ SELECT c.fid, f.fname
       FROM course c
       GROUP BY c.fid));
 
--- Query 9: 
+-- Query 9: Show the student id and number of credits they are taking. A 0 should be displayed for any student not taking any courses.
+SELECT s.sid, COALESCE(sum(c.crdhrs), 0) AS "crdhrs"
+  FROM student s LEFT OUTER JOIN enroll e ON s.sid = e.sid  
+    LEFT OUTER join course c ON e.cid = c.cid  
+    GROUP BY s.sid;
